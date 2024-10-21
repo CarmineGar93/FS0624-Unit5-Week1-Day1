@@ -2,6 +2,7 @@ package Carmine.Gargiulo.FS0624_Unit5_Week1_Day1.entities;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import java.util.*;
 
@@ -9,75 +10,84 @@ import java.util.*;
 public class AppConfig {
     @Bean
     public Topping getTomato(){
-        Topping topping = new Topping(0.5, 50);
+        Topping topping = new Topping(0.5, 30);
         topping.setName("Tomato");
         return topping;
     }
 
     @Bean
     public Topping getCheese(){
-        Topping topping = new Topping(0.69, 92);
+        Topping topping = new Topping(0.5, 80);
         topping.setName("Cheese");
         return topping;
     }
 
     @Bean
     public Topping getSausage(){
-        Topping topping = new Topping(0.99, 40);
+        Topping topping = new Topping(1, 100);
         topping.setName("Sausage");
         return topping;
     }
 
     @Bean
     public Topping getMushrooms(){
-        Topping topping = new Topping(0.69, 22);
+        Topping topping = new Topping(1, 40);
         topping.setName("Mushrooms");
         return topping;
     }
 
     @Bean
     public Topping getSalame(){
-        Topping topping = new Topping(0.99, 86);
+        Topping topping = new Topping(0.5, 70);
         topping.setName("Spicy salame");
         return topping;
     }
 
     @Bean
     public Topping getMelanzane(){
-        Topping topping = new Topping(0.59, 40);
+        Topping topping = new Topping(0.5, 20);
         topping.setName("Eggplant");
         return topping;
     }
 
     @Bean
     public List<Topping> getToppingBase(){
-        return Arrays.asList(getCheese(), getTomato());
+        List<Topping> base = new ArrayList<>();
+        base.add(getCheese());
+        base.add(getTomato());
+        return base;
     }
 
     @Bean
+    @Scope("prototype")
     public Pizza getPizzaMargherita(){
-        Pizza pizza = new Pizza(4.99, 1104, Arrays.asList(getTomato(), getCheese()));
+        Pizza pizza = new Pizza(4.99, 1000, getToppingBase());
         pizza.setName("Pizza Margherita");
         return pizza;
     }
 
     @Bean
     public Pizza getPizzaSalsicciaFunghi(){
-        Pizza pizza = new Pizza(6.99, 1180, Arrays.asList(getTomato(), getSalame(), getSausage(), getMushrooms()));
+        Pizza pizza = getPizzaMargherita();
+        pizza.addTopping(getMushrooms());
+        pizza.addTopping(getSausage());
         pizza.setName("Pizza sausage and mushrooms");
         return pizza;
     }
 
     @Bean
     public Pizza getPizzaDiavola(){
-        Pizza pizza = new Pizza(5.99, 1160, Arrays.asList(getTomato(), getCheese(), getSalame()));
+        Pizza pizza = getPizzaMargherita();
+        pizza.addTopping(getSalame());
         pizza.setName("Pizza diavola");
         return pizza;
     }
 
     @Bean
     public Pizza getPizzaMelanzaneSalsiccia(){
-        Pizza pizza = new Pizza(7.99, 1120, Arrays.asList(getTomato(), getCheese(), getSausage(), getMelanzane()));
+        Pizza pizza = getPizzaMargherita();
+        pizza.addTopping(getMelanzane());
+        pizza.addTopping(getSausage());
         pizza.setName("Pizza sausage and eggplant");
         return pizza;
     }
