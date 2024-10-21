@@ -56,7 +56,7 @@ public class AppConfig {
 
     @Bean
     public Pizza getPizzaMargherita(){
-        Pizza pizza = new Pizza(4.99, 1104, Arrays.asList(getTomato(), getSalame()));
+        Pizza pizza = new Pizza(4.99, 1104, Arrays.asList(getTomato(), getCheese()));
         pizza.setName("Pizza Margherita");
         return pizza;
     }
@@ -111,8 +111,8 @@ public class AppConfig {
     }
 
     @Bean(name = "menu")
-    public Menu getMenu(){
-        Menu menu = new Menu(Arrays.asList(getPizzaMargherita(), getPizzaDiavola(), getPizzaMelanzaneSalsiccia(), getPizzaSalsicciaFunghi(), getTomato(), getCheese(), getSalame(), getSausage(), getMelanzane(), getWater(), getCocaCola(), getFanta(), getBeer()));
+    public Menu getMenu(List<MenuProduct> menuProductList){
+        Menu menu = new Menu(menuProductList);
         return menu;
     }
 }
